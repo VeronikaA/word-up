@@ -171,7 +171,7 @@ function render() {
     if (gameOver) {
         // TODO 9
         // disable the text box and clear its contents
-        $("#textbox").attr("disabled", true).val (" ")
+        $("#textbox").attr("disabled", true).val(" ")
 
     }
 }
@@ -215,6 +215,7 @@ function wordSubmissionChip(wordSubmission) {
 
         // TODO 16
         // append scoreChip into wordChip
+        wordChip.append(scoreChip);
 
     }
 
@@ -246,6 +247,7 @@ $(document).ready(function() {
     // Add another event handler with a callback function.
     // When the textbox content changes,
     // update the .currentAttempt property of the model and re-render
+    $("#textbox").on ("input",function()
 
 
     // when the form is submitted
