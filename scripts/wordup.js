@@ -142,6 +142,7 @@ function render() {
 
     // TODO 11
     // Render the word submissions
+    $("#word-submissions").append(wordSubmissions)
 
 
     // Set the value of the textbox
