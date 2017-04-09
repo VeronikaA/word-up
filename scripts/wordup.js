@@ -170,8 +170,11 @@ function render() {
     var gameOver = model.secondsRemaining <= 0
     if (gameOver) {
         // TODO 9
-        // disable the text box and clear its contents
-        $("#textbox").attr("disabled", true).val(" ")
+        // disable the text box and clear its contents    // DONE
+        $('#textbox').attr('disabled', 'disabled');
+        $('#textbox').val("");
+    }
+}
 
     }
 }
@@ -208,13 +211,18 @@ function wordSubmissionChip(wordSubmission) {
     if (wordSubmission.hasOwnProperty("isRealWord")) {
         var scoreChip = $("<span></span>").text("⟐");
         // TODO 17
-        // give the scoreChip appropriate text content
+        // give the scoreChip appropriate text content                 // DONE
+          if (wordSubmission.isRealWord === true) {
+           $(scoreChip).text(wordScore(wordSubmission.word)).addClass("tag tag-sm tag-primary");;
+       }
+       else {
+           $(scoreChip).text("X").addClass("tag tag-sm tag-danger"); // if not real word
 
         // TODO 18
-        // give the scoreChip appropriate css classes
+        // give the scoreChip appropriate css classes  // DONE
 
         // TODO 16
-        // append scoreChip into wordChip
+        // append scoreChip into wordChip   // DONE
         wordChip.append(scoreChip);
 
     }
@@ -247,7 +255,14 @@ $(document).ready(function() {
     // Add another event handler with a callback function.
     // When the textbox content changes,
     // update the .currentAttempt property of the model and re-render
-    $("#textbox").on ("input",function()
+    $("#textbox").on ("input",function() {
+       model.currentAttempt = $("#textbox").val();
+        render();
+        //      Set the value of the textbox
+        $("#textbox").val(model.currentAttempt);
+       
+     });   
+          // $("#textbox").val(model.currentAttempt);
 
 
     // when the form is submitted
@@ -286,8 +301,9 @@ function isDisallowedLetter(letter) {
     // TODO 7
     // This should return true if the letter is not an element of
     // the .allowedLetters list in the model
-    return false;
+    return model.allowedLetters.indexOf(letter) == -1;     // DONE
 }
+
 
 /**
  * Given a word, returns a list of all the disallowed letters in that word
@@ -305,8 +321,13 @@ function disallowedLettersInWord(word) {
 function containsOnlyAllowedLetters(word) {
     // TODO 12
     // Return the actual answer.
-    return true;
+    if (disallowedLettersInWord(word) == "") {
+      return true;                                        // DONE
+    } else {
+      return false;
+  }
 }
+
 
 /**
  * Returns a list of 7 randomly chosen letters
@@ -336,7 +357,7 @@ function wordScore(word) {
     // TODO 19
     // Replace the empty list below.
     // Map the list of letters into a list of scores, one for each letter.
-    var letterScores = letters.map(letterScore);
+     var letterScores = $.map(letters, letterScore);  // DONE
 
     // return the total sum of the letter scores
     return letterScores.reduce(add, 0);
@@ -360,8 +381,10 @@ function currentScore() {
 
     // TODO 20
     // return the total sum of the word scores
-    return 0;
+   return wordScores.reduce(add, 0);
 }
+
+
 
 
 // ----------------- UTILS -----------------
